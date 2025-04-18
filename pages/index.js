@@ -87,3 +87,54 @@ export default function Home() {
     </div>
   );
 }
+import { useEffect, useState } from "react";
+
+export default function Home() {
+  const [spotifyConnected, setSpotifyConnected] = useState(false);
+  const [hrv, setHrv] = useState(45); // dummy HRV value
+  const [fatigueDetected, setFatigueDetected] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const params = new URLSearchParams(hash.substring(1));
+      const token = params.get("access_token");
+      if (token) {
+        setAccessToken(token);
+        setSpotifyConnected(true);
+      }
+    }
+  }, []);
+
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-6 text-gray-800">
+      <div className="bg-white shadow-xl rounded-2xl p-8 max-w-md w-full text-center space-y-6">
+        <h1 className="text-3xl font-bold text-blue-600">ConnectYourPulse</h1>
+
+        <div className="space-y-2">
+          <p className="text-sm">Status: {spotifyConnected ? "Connected ✅" : "Not connected ❌"}</p>
+          {!spotifyConnected && (
+            <a
+              href="https://accounts.spotify.com/authorize?client_id=YOUR_SPOTIFY_CLIENT_ID&response_type=token&redirect_uri=http://localhost:3000&scope=user-read-private"
+              className="inline-block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
+            >
+              Connect to Spotify
+            </a>
+          )}
+        </div>
+
+        <div className="bg-gray-100 p-4 rounded-lg">
+          <h2 className="text-lg font-semibold mb-1">HRV Monitoring</h2>
+          <p className="text-2xl font-bold">{hrv} ms</p>
+        </div>
+
+        {fatigueDetected && (
+          <div className="p-4 bg-red-100 text-red-600 rounded-lg border border-red-300">
+            <strong>Fatigue detected!</strong>
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}
