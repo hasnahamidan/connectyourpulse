@@ -1,12 +1,14 @@
 export default function Home() {
-  const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
+  const clientId = "76776b067d794946aff978a99f961533";
   const redirectUri = "https://connectyourpulseid.vercel.app/api/callback";
   const scope = "user-read-private user-read-email";
 
+
   const handleConnectSpotify = () => {
-    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}&show_dialog=true`;
+    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${encodeURIComponent(scope)}&show_dialog=true`;
     window.location.href = authUrl;
   };
+
 
   return (
     <div style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
