@@ -5,8 +5,8 @@ export default function Home() {
   const [spotifyConnected, setSpotifyConnected] = useState(false);
   const [userData, setUserData] = useState(null);
 
-  const clientId = "YOUR_SPOTIFY_CLIENT_ID"; // Ganti dengan client ID Spotify kamu
-  const redirectUri = "http://localhost:3000"; // atau ganti ke URL vercel kamu jika sudah di-deploy
+  const clientId = "76776b067d794946aff978a99f961533";
+  const redirectUri = "https://connectyourpulseid.vercel.app";
   const scope = "user-read-private user-read-email";
 
   useEffect(() => {
