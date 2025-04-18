@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connect Your Pulse</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: #e6f4f1;
+      color: #1a1a1a;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 5px 0;
+    }
+    .button {
+      padding: 10px 20px;
+      background: #50bfa5;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      display: block;
+      width: 100%;
+    }
+    .playlist-card {
+      background: #d4f1ec;
+      border-radius: 15px;
+      text-align: center;
+      padding: 20px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>ConnectYourPulse</h1>
+      <p>Stay focused and relaxed during activity</p>
+      <button class="button">Connect to Spotify</button>
+      <button class="button" style="background:#fff;color:#50bfa5;border:2px solid #50bfa5;">Start Monitoring</button>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Monitoring Active</div>
+      <div class="row"><span>❤️ Heart rate</span><strong>59 ppm</strong></div>
+      <div class="row"><span>📉 HRV</span><strong>38 ms</strong></div>
+      <p style="color:#e23e57;font-weight:bold;">⚠️ Fatigue detected</p>
+      <p><strong>🎧 Relax & Recharge</strong><br/>Lo-fi Chill Beat – 2:53</p>
+      <button class="button" style="background:#ff8882;">Stop Music</button>
+      <button class="button">Change Playlist</button>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Select Playlist</div>
+      <div class="playlist-card">🌊 Relaxing</div>
+      <div class="playlist-card">✨ Focus Boost</div>
+      <div class="playlist-card">🌅 Re-energize</div>
+      <button class="button">Play This Playlist</button>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Settings</div>
+      <p>✅ Auto-play when fatigue detected</p>
+      <p>✅ Send notification when HRV recovers</p>
+    </div>
+  </div>
+</body>
+</html>
