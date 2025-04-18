@@ -22,13 +22,13 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-teal-50 flex flex-col items-center justify-center py-10 px-4 text-gray-800">
+    <main className="min-h-screen bg-green-50 flex flex-col items-center justify-center py-10 px-4 text-gray-800">
       <div className="w-full max-w-md space-y-6">
         <Card className="rounded-2xl shadow-lg">
           <CardContent className="p-6 text-center space-y-4">
             <div className="flex flex-col items-center space-y-2">
-              <HeartPulse className="h-10 w-10 text-teal-600" />
-              <h1 className="text-2xl font-bold text-teal-700">ConnectYourPulse</h1>
+              <HeartPulse className="h-10 w-10 text-green-600" />
+              <h1 className="text-2xl font-bold text-green-700">ConnectYourPulse</h1>
               <p className="text-sm text-gray-500">Stay focused & relaxed during activity</p>
             </div>
             <div className="space-y-2">
@@ -40,7 +40,9 @@ export default function Home() {
                   href="https://accounts.spotify.com/authorize?client_id=YOUR_SPOTIFY_CLIENT_ID&response_type=token&redirect_uri=https://connectyourpulse.vercel.app&scope=user-read-private"
                   className="inline-block w-full"
                 >
-                  <Button className="w-full bg-teal-500 hover:bg-teal-600 text-white">Connect to Spotify</Button>
+                  <Button className="w-full bg-green-500 hover:bg-green-600 text-white">
+                    Connect to Spotify
+                  </Button>
                 </a>
               )}
             </div>
@@ -71,15 +73,19 @@ export default function Home() {
         <Card className="rounded-2xl shadow-md">
           <CardContent className="p-5 space-y-4">
             <div className="flex items-center space-x-3">
-              <Headphones className="w-6 h-6 text-teal-600" />
+              <Headphones className="w-6 h-6 text-green-600" />
               <div>
                 <p className="text-sm font-semibold">Relax & Recharge</p>
                 <p className="text-xs text-gray-500">Lo-Fi Chill Beat – 2:53</p>
               </div>
             </div>
             <div className="flex space-x-2">
-              <Button variant="outline" className="w-full border-teal-500 text-teal-600">Stop Music</Button>
-              <Button className="w-full bg-teal-500 hover:bg-teal-600 text-white">Change Playlist</Button>
+              <Button variant="outline" className="w-full border-green-500 text-green-600">
+                Stop Music
+              </Button>
+              <Button className="w-full bg-green-500 hover:bg-green-600 text-white">
+                Change Playlist
+              </Button>
             </div>
           </CardContent>
         </Card>
