@@ -72,3 +72,4 @@ export default function Home() {
     </div>
   );
 }
+delete this file
