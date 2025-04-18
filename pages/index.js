@@ -3,49 +3,80 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [accessToken, setAccessToken] = useState(null);
   const [spotifyConnected, setSpotifyConnected] = useState(false);
+  const [userData, setUserData] = useState(null);
 
-  // Ambil token dari URL setelah login Spotify
+  const clientId = "YOUR_SPOTIFY_CLIENT_ID"; // Ganti dengan client ID Spotify kamu
+  const redirectUri = "http://localhost:3000"; // atau ganti ke URL vercel kamu jika sudah di-deploy
+  const scope = "user-read-private user-read-email";
+
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
-      const params = new URLSearchParams(hash.substring(1));
-      const token = params.get("access_token");
+      const token = new URLSearchParams(hash.substring(1)).get("access_token");
       if (token) {
         setAccessToken(token);
         setSpotifyConnected(true);
-        window.history.pushState("", document.title, window.location.pathname); // hapus token dari URL
+        window.history.pushState("", document.title, window.location.pathname); // hapus hash dari URL
       }
     }
   }, []);
 
-  // Ambil info user Spotify setelah konek
   useEffect(() => {
-    if (!accessToken) return;
-
-    fetch("https://api.spotify.com/v1/me", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("User info:", data));
+    if (accessToken) {
+      fetch("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Gagal mengambil data pengguna Spotify");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setUserData(data);
+        })
+        .catch((err) => {
+          console.error(err);
+          setSpotifyConnected(false);
+        });
+    }
   }, [accessToken]);
 
-  const clientId = "76776b067d794946aff978a99f961533"; // ← ganti ini
-  const redirectUri = "https://connectyourpulseid.vercel.app"; // ← ganti ini kalau pakai Vercel
-  const scopes = "user-read-email user-read-private";
-
-  const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
+  const handleConnectSpotify = () => {
+    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scope}`;
+    window.location.href = authUrl;
+  };
 
   return (
-    <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1>Connect Your Pulse</h1>
+    <div style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
+      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Connect Your Pulse</h1>
       {!spotifyConnected ? (
-        <a href={authUrl}>
-          <button>Connect to Spotify</button>
-        </a>
+        <button
+          onClick={handleConnectSpotify}
+          style={{
+            padding: "0.75rem 1.5rem",
+            fontSize: "1rem",
+            backgroundColor: "#1DB954",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          Connect to Spotify
+        </button>
       ) : (
-        <p>Spotify connected!</p>
+        <div>
+          <p>✅ Connected to Spotify</p>
+          {userData && (
+            <div style={{ marginTop: "1rem" }}>
+              <p><strong>Name:</strong> {userData.display_name}</p>
+              <p><strong>Email:</strong> {userData.email}</p>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
