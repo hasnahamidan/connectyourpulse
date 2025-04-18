@@ -31,8 +31,8 @@ export default function Home() {
       .then((data) => console.log("User info:", data));
   }, [accessToken]);
 
-  const clientId = "SPOTIFY_CLIENT_ID_KAMU"; // ← ganti ini
-  const redirectUri = "http://localhost:3000"; // ← ganti ini kalau pakai Vercel
+  const clientId = "76776b067d794946aff978a99f961533"; // ← ganti ini
+  const redirectUri = "https://connectyourpulseid.vercel.app"; // ← ganti ini kalau pakai Vercel
   const scopes = "user-read-email user-read-private";
 
   const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
