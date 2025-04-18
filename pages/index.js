@@ -40,9 +40,7 @@ export default function Home() {
                   href="https://accounts.spotify.com/authorize?client_id=YOUR_SPOTIFY_CLIENT_ID&response_type=token&redirect_uri=https://connectyourpulse.vercel.app&scope=user-read-private"
                   className="inline-block w-full"
                 >
-                  <Button className="w-full bg-teal-500 hover:bg-teal-600 text-white">
-                    Connect to Spotify
-                  </Button>
+                  <Button className="w-full bg-teal-500 hover:bg-teal-600 text-white">Connect to Spotify</Button>
                 </a>
               )}
             </div>
@@ -57,4 +55,35 @@ export default function Home() {
                 <p className="text-xl font-bold text-red-600">59 bpm</p>
               </div>
               <div>
-                <p className
+                <p className="text-sm font-medium text-gray-600">HRV</p>
+                <p className="text-xl font-bold text-blue-600">{hrv} ms</p>
+              </div>
+            </div>
+            {fatigueDetected && (
+              <div className="flex items-center bg-red-100 text-red-600 p-2 rounded-lg space-x-2">
+                <AlertCircle className="w-5 h-5" />
+                <p className="text-sm font-semibold">Fatigue detected</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-2xl shadow-md">
+          <CardContent className="p-5 space-y-4">
+            <div className="flex items-center space-x-3">
+              <Headphones className="w-6 h-6 text-teal-600" />
+              <div>
+                <p className="text-sm font-semibold">Relax & Recharge</p>
+                <p className="text-xs text-gray-500">Lo-Fi Chill Beat – 2:53</p>
+              </div>
+            </div>
+            <div className="flex space-x-2">
+              <Button variant="outline" className="w-full border-teal-500 text-teal-600">Stop Music</Button>
+              <Button className="w-full bg-teal-500 hover:bg-teal-600 text-white">Change Playlist</Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </main>
+  );
+}
