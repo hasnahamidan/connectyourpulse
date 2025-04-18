@@ -1,2 +1,3 @@
 # ConnectYourPulse
-A web app that connects Spotify and plays relaxing music when fatigue is detected.
+
+This project connects Spotify with your heart rate (HRV) to auto-play relaxing music when fatigue is detected.
