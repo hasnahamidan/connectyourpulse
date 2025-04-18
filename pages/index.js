@@ -1,56 +1,52 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [connected, setConnected] = useState(false);
-  const [hrv, setHrv] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+  const [spotifyConnected, setSpotifyConnected] = useState(false);
 
-  const handleConnect = () => {
-    // Simulasi koneksi ke Spotify
-    setConnected(true);
-  };
-
+  // Ambil token dari URL setelah login Spotify
   useEffect(() => {
-    if (connected) {
-      const interval = setInterval(() => {
-        // Simulasi update HRV
-        setHrv(Math.floor(Math.random() * 50) + 40);
-      }, 3000);
-      return () => clearInterval(interval);
+    const hash = window.location.hash;
+    if (hash) {
+      const params = new URLSearchParams(hash.substring(1));
+      const token = params.get("access_token");
+      if (token) {
+        setAccessToken(token);
+        setSpotifyConnected(true);
+        window.history.pushState("", document.title, window.location.pathname); // hapus token dari URL
+      }
     }
-  }, [connected]);
+  }, []);
+
+  // Ambil info user Spotify setelah konek
+  useEffect(() => {
+    if (!accessToken) return;
+
+    fetch("https://api.spotify.com/v1/me", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log("User info:", data));
+  }, [accessToken]);
+
+  const clientId = "SPOTIFY_CLIENT_ID_KAMU"; // ← ganti ini
+  const redirectUri = "http://localhost:3000"; // ← ganti ini kalau pakai Vercel
+  const scopes = "user-read-email user-read-private";
+
+  const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-green-50 px-4">
-      <div className="max-w-md w-full space-y-6 p-6 bg-white rounded-2xl shadow-xl">
-        <h1 className="text-3xl font-bold text-green-700 text-center">ConnectYourPulse</h1>
-        <div className="text-center">
-          <p className="text-lg">
-            Status:{' '}
-            <span className={connected ? 'text-green-600' : 'text-red-500'}>
-              {connected ? 'Connected' : 'Not connected'}
-            </span>{' '}
-            {connected ? '✅' : '❌'}
-          </p>
-        </div>
-        <div className="text-center">
-          <button
-            onClick={handleConnect}
-            disabled={connected}
-            className="px-6 py-2 rounded-lg font-semibold text-white bg-green-600 hover:bg-green-700 disabled:opacity-50"
-          >
-            Connect to Spotify
-          </button>
-        </div>
-        <div className="text-center space-y-2 pt-4 border-t border-gray-200">
-          <h2 className="text-xl font-semibold text-green-700">HRV Monitoring</h2>
-          <p className="text-lg">
-            Current HRV:{' '}
-            <span className="font-mono text-green-800">
-              {hrv ? `${hrv} ms` : '--'}
-            </span>
-          </p>
-        </div>
-      </div>
+    <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
+      <h1>Connect Your Pulse</h1>
+      {!spotifyConnected ? (
+        <a href={authUrl}>
+          <button>Connect to Spotify</button>
+        </a>
+      ) : (
+        <p>Spotify connected!</p>
+      )}
     </div>
   );
 }
