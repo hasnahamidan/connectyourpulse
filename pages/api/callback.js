@@ -23,10 +23,8 @@ export default async function handler(req, res) {
   const data = await response.json();
 
   if (data.access_token) {
-    // Redirect to homepage with token in query (or save it securely)
     res.redirect(`/?access_token=${data.access_token}`);
   } else {
-    console.error("Token exchange failed:", data);
     res.status(400).json({ error: "Token exchange failed", details: data });
   }
 }
